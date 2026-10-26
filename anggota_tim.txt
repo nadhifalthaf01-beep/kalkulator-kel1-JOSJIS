@@ -1,0 +1,79 @@
+miguel#include <iostream>
+#include <limits>
+#include "kalkulator.h"
+
+using namespace std;
+
+// Membaca satu bilangan; jika input bukan angka, bersihkan dan minta ulang.
+double bacaAngka(const string& label) {
+    double x;
+    cout << label;
+    while (!(cin >> x)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Input bukan angka, coba lagi: ";
+    }
+    return x;
+}
+
+void tampilkanMenu() {
+    cout << "\n=== KALKULATOR ===\n";
+    cout << "1. Penjumlahan\n";       // Sprint 1 - PB-01
+    cout << "2. Pengurangan\n";       // Sprint 1 - PB-02
+    cout << "3. Perkalian\n";         // Sprint 2 - PB-03
+    cout << "4. Pembagian\n";         // Sprint 2 - PB-04
+    cout << "5. Akar kuadrat\n";      // Sprint 3 - PB-05
+    cout << "6. Persentase\n";        // Sprint 3 - PB-06
+    cout << "0. Keluar\n";
+    cout << "Pilih menu: ";
+}
+
+int main() {
+    int pilihan;
+    do {
+        tampilkanMenu();
+        if (!(cin >> pilihan)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            pilihan = -1;
+        }
+
+        if (pilihan == 1) {                                   // PB-01
+            double a = bacaAngka("Bilangan pertama: ");
+            double b = bacaAngka("Bilangan kedua: ");
+            cout << "Hasil: " << tambah(a, b) << endl;
+        } else if (pilihan == 2) {                            // PB-02
+            double a = bacaAngka("Bilangan pertama: ");
+            double b = bacaAngka("Bilangan kedua: ");
+            cout << "Hasil: " << kurang(a, b) << endl;
+        } else if (pilihan == 3) {                            // PB-03
+            double a = bacaAngka("Bilangan pertama: ");
+            double b = bacaAngka("Bilangan kedua: ");
+            cout << "Hasil: " << kali(a, b) << endl;
+        } else if (pilihan == 4) {                            // PB-04
+            double a = bacaAngka("Bilangan pertama: ");
+            double b = bacaAngka("Bilangan kedua (pembagi): ");
+            if (b == 0) {
+                cout << "Error: tidak bisa membagi dengan nol" << endl;
+            } else {
+                cout << "Hasil: " << bagi(a, b) << endl;
+            }
+        } else if (pilihan == 5) {                            // PB-05
+            double x = bacaAngka("Bilangan: ");
+            if (x < 0) {
+                cout << "Error: akar dari bilangan negatif tidak terdefinisi" << endl;
+            } else {
+                cout << "Hasil: " << akar(x) << endl;
+            }
+        } else if (pilihan == 6) {                            // PB-06
+            double nilai = bacaAngka("Nilai: ");
+            double p = bacaAngka("Persen: ");
+            cout << "Hasil: " << persen(nilai, p) << endl;
+        } else if (pilihan != 0) {
+            cout << "Pilihan tidak valid" << endl;
+        }
+    } while (pilihan != 0);
+
+    cout << "Terima kasih!" << endl;
+    return 0;
+}
